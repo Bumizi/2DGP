@@ -62,9 +62,9 @@ def move_point_to_point(i):
 #character.draw_now(Point_List[i][0], Point_List[i][1])
 i = 0
 while True:
-    if i < 10:
+    move_point_to_point(i)
+    if i < 9:
      i += 1
-    elif i >= 10:
+    elif i >= 9:
      i = 0
-     move_point_to_point(i)
 close_canvas()
