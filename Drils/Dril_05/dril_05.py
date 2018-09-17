@@ -33,6 +33,8 @@ def move_left():
         delay(0.01)
     pass
 def move_right():
+    pass
+def move_down():
     x, y = 0 + 25, 600 - 50
     while y > 0 + 90:
         clear_canvas_now()
@@ -40,8 +42,6 @@ def move_right():
         character.draw_now(x, y)
         y -= 2
         delay(0.01)
-    pass
-def move_down():
     pass
 def move_from_left_to_center():
     pass
