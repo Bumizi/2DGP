@@ -1,5 +1,5 @@
 from pico2d import *
-import math
+
 open_canvas()
 
 grass = load_image('grass.png')
@@ -25,9 +25,7 @@ def move_right_face(dif_x, dif_y, i):
         j += 1
         delay(0.05)
         get_events()
-    pass
 
-#x != Point_List[i+1][0] & y != Point_List[i+1][1]
 
 def move_left_face(dif_x, dif_y, i):
     x = Point_List[i][0]
@@ -45,7 +43,6 @@ def move_left_face(dif_x, dif_y, i):
         j += 1
         delay(0.05)
         get_events()
-    pass
 
 
 def move_point_to_point(i):
@@ -56,15 +53,12 @@ def move_point_to_point(i):
     elif dif_x < 0:
         move_left_face(dif_x, dif_y, i)
 
-    pass
 
-
-#character.draw_now(Point_List[i][0], Point_List[i][1])
 i = 0
+
 while True:
     move_point_to_point(i)
     if i < 9:
      i += 1
     elif i >= 9:
      i = 0
-close_canvas()
