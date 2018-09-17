@@ -24,6 +24,13 @@ def move_up():
         delay(0.01)
     pass
 def move_left():
+    x, y = 800 - 25, 600 - 50
+    while x > 0 + 25:
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.draw_now(x, y)
+        x -= 2
+        delay(0.01)
     pass
 def move_right():
     pass
