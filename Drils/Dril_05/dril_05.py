@@ -49,8 +49,8 @@ def move_left_face(dif_x, dif_y, i):
 
 
 def move_point_to_point(i):
-    dif_x = (Point_List[i+1][0]-Point_List[i][0]) // 40
-    dif_y = (Point_List[i+1][1]-Point_List[i][1]) // 40
+    dif_x = (Point_List[i+1][0]-Point_List[i][0]) / 40
+    dif_y = (Point_List[i+1][1]-Point_List[i][1]) / 40
     if dif_x > 0:
         move_right_face(dif_x, dif_y, i)
     elif dif_x < 0:
