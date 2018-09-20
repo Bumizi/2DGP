@@ -17,7 +17,6 @@ def handle_events():
             mx, my = event.x - 50, KPU_HEIGHT - 1 - event.y + 50
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
-    pass
 
 open_canvas(KPU_WIDTH, KPU_HEIGHT)
 kpu_ground = load_image('KPU_GROUND.png')
@@ -36,35 +35,28 @@ character.clip_draw(frame * 100, 300 * 1, 100, 100, x, 90)
 hide_cursor()
 
 while running:
-
     clear_canvas()
     kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
     dif_x = (mx - cx) / 40
     dif_y = (my - cy) / 40
-
     if dif_x > 0:
         dir = 1
     elif dif_x < 0:
         dir = -1
-
     cx += dif_x
     cy += dif_y
-
     if dir > 0:
         character.clip_draw(frame * 100, 100 * 1, 100, 100, cx, cy)
     elif dir < 0:
         character.clip_draw(frame * 100, 0 * 1, 100, 100, cx, cy)
     elif dir == 0:
         character.clip_draw(frame * 100, 300 * 1, 100, 100, cx, cy)
-
     cursor.clip_draw(0, 0, 100, 100, x, y)
-
     update_canvas()
     handle_events()
     frame = (frame + 1) % 8
     delay(0.02)
     handle_events()
-
 close_canvas()
 
 
