@@ -33,7 +33,7 @@ cy = 90
 dir = 0
 mx, my = 0, 0
 character.clip_draw(frame * 100, 300 * 1, 100, 100, x, 90)
-show_cursor()
+hide_cursor()
 
 while running:
 
@@ -57,7 +57,7 @@ while running:
     elif dir == 0:
         character.clip_draw(frame * 100, 300 * 1, 100, 100, cx, cy)
 
-    
+    cursor.clip_draw(0, 0, 100, 100, x, y)
 
     update_canvas()
     handle_events()
