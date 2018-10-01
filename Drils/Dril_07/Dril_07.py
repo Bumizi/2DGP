@@ -41,11 +41,9 @@ kpu_ground = load_image('KPU_GROUND.png')
 character = load_image('animation_sheet.png')
 
 running = True
-x, y = KPU_WIDTH // 2, KPU_HEIGHT // 2
-i = 0
 
 size = 20
-points = [(random.randint(-500, 500), random.randint(-350, 350)) for i in range(size)]
+points = [(random.randint(0, 1200), random.randint(0, 1000)) for i in range(size)]
 n = 1
 while running:
     move_character(points[n-1], points[n])
