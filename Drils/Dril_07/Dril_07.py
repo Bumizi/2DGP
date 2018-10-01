@@ -39,9 +39,7 @@ def move_character(p1, p2):
 open_canvas(KPU_WIDTH, KPU_HEIGHT)
 kpu_ground = load_image('KPU_GROUND.png')
 character = load_image('animation_sheet.png')
-
 running = True
-
 size = 20
 points = [(random.randint(0, 1200), random.randint(0, 1000)) for i in range(size)]
 n = 1
