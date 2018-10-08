@@ -31,7 +31,7 @@ class Ball21x21:
         self.speed = random.randint(5, 20)
 
     def update(self):
-        if self.y > 0:
+        if self.y > 60:
             self.y -= self.speed
 
     def draw(self):
@@ -45,7 +45,7 @@ class Ball41x41:
         self.speed = random.randint(5, 20)
 
     def update(self):
-        if self.y > 0:
+        if self.y > 70:
             self.y -= self.speed
 
     def draw(self):
