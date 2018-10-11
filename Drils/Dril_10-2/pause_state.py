@@ -5,11 +5,14 @@ import main_state
 
 name = "PauseState"
 image = None
-
+blink_time = 0.0
+blink = None
 
 
 def enter():
     global image
+    global blink
+    blink = False
     image = load_image('pause.png')
     pass
 
@@ -37,18 +40,25 @@ def handle_events():
 
 
 def draw():
+    global blink
     clear_canvas()
-    image.draw(400, 300)
+    if blink:
+        image.draw(400, 300)
     update_canvas()
     pass
 
 
-
-
-
-
-
 def update():
+    global blink_time
+    global blink
+    if blink_time > 1.0:
+        blink_time = 0
+        if blink:
+            blink = False
+        else:
+            blink = True
+    delay(0.01)
+    blink_time += 0.01
     pass
 
 
