@@ -15,7 +15,6 @@ name = "MainState"
 boy = None
 grass = None
 font = None
-is_pause = False
 
 
 class Grass:
@@ -76,7 +75,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_p):
-            is_pause = True
+            game_framework.push_state(pause_state)
             game_framework.change_state(pause_state)
     pass
 
@@ -89,8 +88,7 @@ def update():
 def draw():
     clear_canvas()
     grass.draw()
-    if(is_pause == False):
-        boy.draw()
+    boy.draw()
     update_canvas()
     pass
 
