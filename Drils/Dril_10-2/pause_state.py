@@ -44,6 +44,8 @@ def draw():
     clear_canvas()
     if blink:
         image.draw(400, 300)
+    main_state.grass.draw()
+    main_state.boy.draw()
     update_canvas()
     pass
 
