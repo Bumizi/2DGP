@@ -15,7 +15,6 @@ name = "MainState"
 boy = None
 grass = None
 font = None
-is_pause = False
 
 class Grass:
     def __init__(self):
@@ -46,9 +45,10 @@ class Boy:
 
 
 def enter():
-    global boy, grass
+    global boy, grass, is_pause
     boy = Boy()
     grass = Grass()
+    is_pause = False
     pass
 
 
@@ -78,11 +78,11 @@ def handle_events():
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_p):
             if is_pause:
                 is_pause = False
-                #game_framework.pop_state(pause_state)
+                game_framework.pop_state(pause_state)
             else:
                 is_pause = True
-                #game_framework.push_state(pause_state)
-            game_framework.change_state(pause_state)
+                game_framework.push_state(pause_state)
+            #game_framework.change_state(pause_state)
     pass
 
 
