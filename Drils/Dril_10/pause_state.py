@@ -5,7 +5,7 @@ import main_state
 
 name = "PauseState"
 image = None
-
+is_pause = None
 
 
 def enter():
