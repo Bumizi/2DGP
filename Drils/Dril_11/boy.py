@@ -159,7 +159,7 @@ next_state_table = {
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState, RIGHT_UP: RunState,
                  SPACE: IdleState, LEFT_SHIFT_DOWN: IdleState, LEFT_SHIFT_UP: IdleState, RIGHT_SHIFT_DOWN: IdleState,
                  RIGHT_SHIFT_UP: IdleState},
-    DashState: {RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
+    DashState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
                SPACE: DashState, LEFT_SHIFT_DOWN: DashState, LEFT_SHIFT_UP: RunState, RIGHT_SHIFT_DOWN: DashState,
                RIGHT_SHIFT_UP: RunState, DASH_TIMER: RunState}
 }
