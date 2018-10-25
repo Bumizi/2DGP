@@ -4,14 +4,18 @@ from ball import Ball
 import game_world
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER, SPACE = range(6)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER, SPACE, LEFT_SHIFT_DOWN, LEFT_SHIFT_UP, RIGHT_SHIFT_DOWN, RIGHT_SHIFT_UP, DASH_TIMER = range(11)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE
+    (SDL_KEYDOWN, SDLK_SPACE): SPACE,
+    (SDL_KEYDOWN, SDLK_LSHIFT): LEFT_SHIFT_DOWN,
+    (SDL_KEYUP, SDLK_LSHIFT): LEFT_SHIFT_UP,
+    (SDL_KEYDOWN, SDLK_RSHIFT): RIGHT_SHIFT_DOWN,
+    (SDL_KEYUP, SDLK_RSHIFT): RIGHT_SHIFT_UP
 }
 
 
@@ -29,7 +33,7 @@ class IdleState:
             boy.velocity -= 1
         elif event == LEFT_UP:
             boy.velocity += 1
-        boy.timer = 1000
+        boy.timer = 100
 
     @staticmethod
     def exit(boy, event):
@@ -87,6 +91,42 @@ class RunState:
             boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
 
+class DashState:
+
+    @staticmethod
+    def enter(boy, event):
+        if event == RIGHT_DOWN:
+            boy.velocity += 1
+        elif event == LEFT_DOWN:
+            boy.velocity -= 1
+        elif event == RIGHT_UP:
+            boy.velocity -= 1
+        elif event == LEFT_UP:
+            boy.velocity += 1
+        boy.dir = boy.velocity
+        boy.timer = 100
+
+    @staticmethod
+    def exit(boy, event):
+        if event == SPACE:
+            boy.fire_ball()
+        pass
+
+    @staticmethod
+    def do(boy):
+        boy.frame = (boy.frame + 1) % 8
+        boy.timer -= 1
+        boy.x += boy.velocity * 5
+        boy.x = clamp(25, boy.x, 1600 - 25)
+
+    @staticmethod
+    def draw(boy):
+        if boy.velocity == 1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
+
+
 class SleepState:
     @staticmethod
     def enter(boy, event):
@@ -111,11 +151,17 @@ class SleepState:
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
-                SLEEP_TIMER: SleepState, SPACE: IdleState},
+                SLEEP_TIMER: SleepState, SPACE: IdleState, LEFT_SHIFT_DOWN: IdleState, LEFT_SHIFT_UP: IdleState,
+                RIGHT_SHIFT_DOWN: IdleState, RIGHT_SHIFT_UP: IdleState},
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
-               SPACE: RunState},
+               SPACE: RunState, LEFT_SHIFT_DOWN: DashState, LEFT_SHIFT_UP: RunState, RIGHT_SHIFT_DOWN: DashState,
+               RIGHT_SHIFT_UP: RunState},
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState, RIGHT_UP: RunState,
-                 SPACE: IdleState}
+                 SPACE: IdleState, LEFT_SHIFT_DOWN: IdleState, LEFT_SHIFT_UP: IdleState, RIGHT_SHIFT_DOWN: IdleState,
+                 RIGHT_SHIFT_UP: IdleState},
+    DashState: {RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
+               SPACE: DashState, LEFT_SHIFT_DOWN: DashState, LEFT_SHIFT_UP: RunState, RIGHT_SHIFT_DOWN: DashState,
+               RIGHT_SHIFT_UP: RunState, DASH_TIMER: RunState}
 }
 
 
