@@ -121,6 +121,7 @@ class SleepState:
         boy.ghost = boy.start
         boy.timer = 0
         boy.radian = PIXEL_PER_METER * 3
+        boy.opacify = random.randint(0, 100) / 100
 
 
     @staticmethod
@@ -131,12 +132,15 @@ class SleepState:
     def do(boy):
         boy.ghost = get_time()
         boy.timer = boy.ghost-boy.start
+        boy.opacify = random.randint(0, 100) / 100
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
+            boy.image.opacify(1)
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+            boy.image.opacify(boy.opacify)
             if boy.timer < 1:
                 boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, (3.141592 - (boy.timer*3.141592))/2, '', boy.x - (25 - (boy.timer * 25)), boy.y - (25 - (boy.timer * 25)) , 100, 100)
             else:
