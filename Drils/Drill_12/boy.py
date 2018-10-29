@@ -1,7 +1,7 @@
 import game_framework
 from pico2d import *
 from ball import Ball
-
+import time
 import game_world
 
 # Boy Run Speed
@@ -38,6 +38,7 @@ class IdleState:
 
     @staticmethod
     def enter(boy, event):
+        global enter_time
         if event == RIGHT_DOWN:
             boy.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -46,7 +47,8 @@ class IdleState:
             boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
-        boy.timer = 1000
+        #boy.timer = 1000
+        enter_time = get_time()
 
     @staticmethod
     def exit(boy, event):
@@ -56,10 +58,15 @@ class IdleState:
 
     @staticmethod
     def do(boy):
+        global enter_time
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.timer -= 1
-        if boy.timer == 0:
+        #boy.timer -= 1
+        do_time = get_time()
+        print("eTime: %f, dTime: %f" % (enter_time, do_time))
+        if do_time - enter_time > 10:
             boy.add_event(SLEEP_TIMER)
+        #if boy.timer == 0:
+            #boy.add_event(SLEEP_TIMER)
 
     @staticmethod
     def draw(boy):
