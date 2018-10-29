@@ -1,7 +1,8 @@
 import game_framework
 from pico2d import *
 from ball import Ball
-import time
+import random
+import math
 import game_world
 
 # Boy Run Speed
@@ -11,6 +12,7 @@ RUN_SPEED_KMPH = 20.0 #km/hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH*1000.0/60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM/60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS*PIXEL_PER_METER)
+ANGLE_PER_SECOND = 720
 
 # Boy Action Speed
 # fill expressions correctly
@@ -62,7 +64,7 @@ class IdleState:
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         #boy.timer -= 1
         do_time = get_time()
-        print("eTime: %f, dTime: %f" % (enter_time, do_time))
+        #print("eTime: %f, dTime: %f" % (enter_time, do_time))
         if do_time - enter_time > 10:
             boy.add_event(SLEEP_TIMER)
         #if boy.timer == 0:
@@ -114,7 +116,12 @@ class SleepState:
 
     @staticmethod
     def enter(boy, event):
-        boy.frame = 0
+        #boy.frame = 0
+        boy.start = get_time()
+        boy.ghost = boy.start
+        boy.timer = 0
+        boy.radian = PIXEL_PER_METER * 3
+
 
     @staticmethod
     def exit(boy, event):
@@ -122,12 +129,20 @@ class SleepState:
 
     @staticmethod
     def do(boy):
+        boy.ghost = get_time()
+        boy.timer = boy.ghost-boy.start
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+            if boy.timer < 1:
+                boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, (3.141592 - (boy.timer*3.141592))/2, '', boy.x - (25 - (boy.timer * 25)), boy.y - (25 - (boy.timer * 25)) , 100, 100)
+            else:
+                boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.radian * math.cos(
+                    math.radians(270 + ANGLE_PER_SECOND * (boy.timer % 1))) + boy.x,
+                                    100 * math.sin(math.radians(270 + 720 * (boy.timer % 1))) + boy.y * 2)
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
 
