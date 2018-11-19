@@ -147,7 +147,6 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        #self.font.draw(self.canvas_width//2 - self.fx, self.canvas_height//2 + self.fy, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
         self.font.draw(self.fx - 60, self.fy + 60, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
 
     def handle_event(self, event):
