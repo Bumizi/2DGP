@@ -66,12 +66,6 @@ class WalkingState:
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
-
-        ball.toss_x = boy.x_velocity * game_framework.frame_time
-        ball.toss_y = boy.y_velocity * game_framework.frame_time
-        #ball.toss_x = boy.x - boy.bg.window_left
-        #ball.toss_y = boy.y - boy.bg.window_bottom
-
         boy.x = clamp(boy.y / 5.5, boy.x, (boy.y - 9037) / (-4.9))
         boy.y = clamp(0+60, boy.y, boy.bg.h-20)
 
@@ -156,7 +150,6 @@ class Boy:
     def draw(self):
         self.cur_state.draw(self)
         self.font.draw(self.fx - 30, self.fy + 60, '(%2d)' % (self.count), (255, 255, 0))
-        #print('x :', self.x_velocity, 'y:', self.y_velocity, ' Frame Time:' + str(game_framework.frame_time))
 
         #fill here
         #draw_rectangle(*self.get_bb())
