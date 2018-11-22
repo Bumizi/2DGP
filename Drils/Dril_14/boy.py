@@ -119,6 +119,7 @@ class Boy:
         self.dir = 1
         self.x_velocity, self.y_velocity = 0, 0
         self.frame = 0
+        self.count = 0
         self.fx = 60
         self.fy = 50
         self.event_que = []
@@ -154,7 +155,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.fx - 60, self.fy + 60, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
+        self.font.draw(self.fx - 30, self.fy + 60, '(%2d)' % (self.count), (255, 255, 0))
         #print('x :', self.x_velocity, 'y:', self.y_velocity, ' Frame Time:' + str(game_framework.frame_time))
 
         #fill here
